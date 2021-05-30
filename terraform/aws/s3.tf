@@ -12,6 +12,7 @@ resource "aws_s3_bucket" "data" {
   }
 }
 
+
 resource "aws_s3_bucket_object" "data_object" {
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
@@ -68,7 +69,7 @@ resource "aws_s3_bucket" "data_science" {
 
 resource "aws_s3_bucket" "logs" {
   bucket = "${local.resource_prefix.value}-logs"
-  acl    = "log-delivery-write"
+  acl    = "public"
   versioning {
     enabled = true
   }
