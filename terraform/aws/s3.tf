@@ -139,3 +139,17 @@ resource "aws_s3_bucket" "logs" {
     yor_trace            = "ce72f84f-4cb6-4f67-b540-54d7e998df19"
   }
 }
+
+resource "aws_s3_bucket" "nofat_test_data_science" {
+  # bucket is not encrypted
+  bucket = "${local.resource_prefix.value}-data-science"
+  acl    = "private"
+  versioning {
+    enabled = var.enabled
+  }
+  logging {
+    target_bucket = "${aws_s3_bucket.logs.id}"
+    target_prefix = "log/"
+  }
+  force_destroy = true
+}
