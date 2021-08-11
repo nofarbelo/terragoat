@@ -11,5 +11,5 @@ variable "versioning_enabled" {
 
 variable "enabled" {
   type = bool
-  default = true
+  default = false
 }
