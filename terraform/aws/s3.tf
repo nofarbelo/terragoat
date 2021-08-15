@@ -1,10 +1,11 @@
 resource "aws_s3_bucket" "data" {
+  
+  
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-data"
-  acl           = "public-read"
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-data"
@@ -21,9 +22,17 @@ resource "aws_s3_bucket" "data" {
   versioning {
     enabled = "${var.versioning_enabled}"
   }
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
 
 resource "aws_s3_bucket_object" "data_object" {
+  
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
   source = "resources/customer-master.xlsx"
@@ -42,6 +51,8 @@ resource "aws_s3_bucket_object" "data_object" {
 }
 
 resource "aws_s3_bucket" "financials" {
+  
+  
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
@@ -61,9 +72,21 @@ resource "aws_s3_bucket" "financials" {
     yor_trace            = "cecbef60-a2ea-4710-9d45-b865340e6095"
   }
 
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+  versioning {
+    enabled = true
+  }
 }
 
 resource "aws_s3_bucket" "operations" {
+  
+  
   # bucket is not encrypted
   # bucket does not have access logs
   bucket = "${local.resource_prefix.value}-operations"
@@ -85,9 +108,18 @@ resource "aws_s3_bucket" "operations" {
     yor_trace            = "e62dfbc0-cc44-408b-a26a-13938d22e2f0"
   }
 
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
 }
 
 resource "aws_s3_bucket" "data_science" {
+  
+  
   # bucket is not encrypted
   bucket = "${local.resource_prefix.value}-data-science"
   acl    = "private"
@@ -108,6 +140,13 @@ resource "aws_s3_bucket" "data_science" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "25565a41-2c9e-45f2-a9e9-6c15b7afcfb6"
+  }
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
   }
 }
 
