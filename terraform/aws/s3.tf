@@ -19,6 +19,7 @@ resource "aws_s3_bucket" "data" {
     yor_trace            = "fc8c2d7a-1997-4fc2-95c1-277cba5c2a38"
   }
   versioning {
+    
     enabled = "${var.versioning_enabled}"
   }
 }
@@ -38,6 +39,7 @@ resource "aws_s3_bucket_object" "data_object" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "b77af90c-712d-4209-90ad-d46815ab3eb7"
+    
   }
 }
 
@@ -59,6 +61,7 @@ resource "aws_s3_bucket" "financials" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "cecbef60-a2ea-4710-9d45-b865340e6095"
+    
   }
 
 }
@@ -71,6 +74,7 @@ resource "aws_s3_bucket" "operations" {
   versioning {
     enabled = true
   }
+  
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-operations"
@@ -121,6 +125,7 @@ resource "aws_s3_bucket" "logs" {
     rule {
       apply_server_side_encryption_by_default {
         sse_algorithm     = "aws:kms"
+        
         kms_master_key_id = "${aws_kms_key.logs_key.arn}"
       }
     }
