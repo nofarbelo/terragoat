@@ -1,4 +1,5 @@
 resource "aws_s3_bucket" "data" {
+  
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
@@ -72,6 +73,7 @@ resource "aws_s3_bucket" "operations" {
     enabled = true
   }
   force_destroy = true
+  
   tags = {
     Name                 = "${local.resource_prefix.value}-operations"
     Environment          = local.resource_prefix.value
@@ -88,6 +90,7 @@ resource "aws_s3_bucket" "operations" {
 }
 
 resource "aws_s3_bucket" "data_science" {
+  
   # bucket is not encrypted
   bucket = "${local.resource_prefix.value}-data-science"
   acl    = "private"
@@ -112,6 +115,7 @@ resource "aws_s3_bucket" "data_science" {
 }
 
 resource "aws_s3_bucket" "logs" {
+  
   bucket = "${local.resource_prefix.value}-logs"
   acl    = "log-delivery-write"
   versioning {
@@ -125,6 +129,7 @@ resource "aws_s3_bucket" "logs" {
       }
     }
   }
+  
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-logs"
