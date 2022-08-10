@@ -2,6 +2,8 @@ resource "aws_s3_bucket" "data" {
   # bucket is public
   # bucket is not encrypted
   
+  
+  
   # bucket does not have access logs
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-data"
@@ -102,6 +104,8 @@ resource "aws_s3_bucket" "data_science" {
     target_bucket = "${aws_s3_bucket.logs.id}"
     target_prefix = "log/"
   }
+  
+  
   force_destroy = true
   tags = {
     git_commit           = "d68d2897add9bc2203a5ed0632a5cdd8ff8cefb0"
@@ -128,6 +132,8 @@ resource "aws_s3_bucket" "logs" {
         kms_master_key_id = "${aws_kms_key.logs_key.arn}"
       }
     }
+    
+    
   }
   force_destroy = true
   tags = {
