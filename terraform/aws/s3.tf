@@ -3,6 +3,7 @@ resource "aws_s3_bucket" "data" {
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
+  
   bucket        = "${local.resource_prefix.value}-data"
   acl           = "public-read"
   force_destroy = true
@@ -36,6 +37,7 @@ resource "aws_s3_bucket_object" "data_object" {
     git_last_modified_by = "nimrodkor@gmail.com"
     git_modifiers        = "nimrodkor"
     git_org              = "try-bridgecrew"
+    
     git_repo             = "terragoat"
     yor_trace            = "b77af90c-712d-4209-90ad-d46815ab3eb7"
   }
@@ -45,6 +47,7 @@ resource "aws_s3_bucket" "financials" {
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
+  
   bucket        = "${local.resource_prefix.value}-financials"
   acl           = "private"
   force_destroy = true
@@ -69,6 +72,7 @@ resource "aws_s3_bucket" "operations" {
   bucket = "${local.resource_prefix.value}-operations"
   acl    = "private"
   versioning {
+    
     enabled = true
   }
   force_destroy = true
@@ -98,6 +102,7 @@ resource "aws_s3_bucket" "data_science" {
     target_bucket = "${aws_s3_bucket.logs.id}"
     target_prefix = "log/"
   }
+  
   force_destroy = true
   tags = {
     git_commit           = "d68d2897add9bc2203a5ed0632a5cdd8ff8cefb0"
