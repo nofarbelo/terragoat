@@ -5,6 +5,9 @@ resource "aws_s3_bucket" "data" {
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-data"
   acl           = "public-read"
+  
+  
+  
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-data"
@@ -47,6 +50,7 @@ resource "aws_s3_bucket" "financials" {
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-financials"
   acl           = "private"
+  
   force_destroy = true
   tags = {
     Name                 = "${local.resource_prefix.value}-financials"
@@ -88,6 +92,7 @@ resource "aws_s3_bucket" "operations" {
 }
 
 resource "aws_s3_bucket" "data_science" {
+  
   # bucket is not encrypted
   bucket = "${local.resource_prefix.value}-data-science"
   acl    = "private"
