@@ -12,6 +12,10 @@ resource "aws_kms_key" "logs_key" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "651492b6-4d42-4633-a9ce-3b9be25b9152"
+    ";p"                 = ";p"
+    dwefr                = "grew"
+    fe                   = "hbt"
+    lo                   = ";o"
   }
 }
 
@@ -36,6 +40,10 @@ resource "aws_kms_key" "customer_key" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "5fbd52d8-2726-4d86-afaf-836296566d69"
+    ";p"                 = ";p"
+    dwefr                = "grew"
+    fe                   = "hbt"
+    lo                   = ";o"
   }
 }
 
