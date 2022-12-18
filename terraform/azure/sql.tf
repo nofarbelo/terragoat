@@ -38,6 +38,7 @@ resource "azurerm_mssql_server_security_alert_policy" "example" {
     "Data_Exfiltration"
   ]
   retention_days = 20
+  email_account_admins = true
 }
 
 resource "azurerm_mysql_server" "example" {
@@ -55,8 +56,8 @@ resource "azurerm_mysql_server" "example" {
   auto_grow_enabled                 = true
   backup_retention_days             = 7
   infrastructure_encryption_enabled = true
-  public_network_access_enabled     = true
-  ssl_enforcement_enabled           = false
+  public_network_access_enabled     = false
+  ssl_enforcement_enabled           = true
   tags = {
     git_commit           = "81738b80d571fa3034633690d13ffb460e1e7dea"
     git_file             = "terraform/azure/sql.tf"
@@ -67,6 +68,11 @@ resource "azurerm_mysql_server" "example" {
     git_repo             = "terragoat"
     yor_trace            = "3f28ffc5-e9e7-4830-8779-031e52933166"
   }
+  geo_redundant_backup_enabled = true
+  ssl_minimal_tls_version_enforced = "TLS1_2"
+  threat_detection_policy {
+    enabled = true
+  }
 }
 
 resource "azurerm_postgresql_server" "example" {
@@ -76,12 +82,12 @@ resource "azurerm_postgresql_server" "example" {
   sku_name                     = "B_Gen5_2"
   storage_mb                   = 5120
   backup_retention_days        = 7
-  geo_redundant_backup_enabled = false
+  geo_redundant_backup_enabled = true
   auto_grow_enabled            = true
   administrator_login          = "terragoat"
   administrator_login_password = "Aa12345678"
   version                      = "9.5"
-  ssl_enforcement_enabled      = false
+  ssl_enforcement_enabled      = true
   tags = {
     git_commit           = "81738b80d571fa3034633690d13ffb460e1e7dea"
     git_file             = "terraform/azure/sql.tf"
@@ -91,6 +97,12 @@ resource "azurerm_postgresql_server" "example" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "e5dfc9ef-49de-4e8a-a61e-fad7cc4844b6"
+  }
+  infrastructure_encryption_enabled = true
+  ssl_minimal_tls_version_enforced = "TLS1_2"
+  public_network_access_enabled = false
+  threat_detection_policy {
+    enabled = true
   }
 }
 

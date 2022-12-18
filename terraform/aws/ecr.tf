@@ -1,6 +1,6 @@
 resource aws_ecr_repository "repository" {
   name                 = "${local.resource_prefix.value}-repository"
-  image_tag_mutability = "MUTABLE"
+  image_tag_mutability = "IMMUTABLE"
 
   tags = {
     Name                 = "${local.resource_prefix.value}-repository"
@@ -12,6 +12,12 @@ resource aws_ecr_repository "repository" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "62b4c542-6734-4fa4-83b1-bc7f0cc26332"
+  }
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  encryption_configuration {
+    encryption_type = "KMS"
   }
 }
 

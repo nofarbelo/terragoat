@@ -55,4 +55,7 @@ resource "aws_lambda_function" "analysis_lambda" {
     git_repo             = "terragoat"
     yor_trace            = "611e7f1a-047c-4b66-9028-39dd298833b4"
   }
+  tracing_config {
+    mode = "PassThrough"
+  }
 }
