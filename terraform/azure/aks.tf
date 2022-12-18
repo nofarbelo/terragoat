@@ -13,7 +13,7 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
   }
   addon_profile {
     oms_agent {
-      enabled = false
+      enabled = true
     }
     kube_dashboard {
       enabled = true
@@ -32,4 +32,6 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
     git_repo             = "terragoat"
     yor_trace            = "f25ff168-9614-4205-96d4-f212a22cabbb"
   }
+  private_cluster_enabled = true
+  local_account_disabled = true
 }

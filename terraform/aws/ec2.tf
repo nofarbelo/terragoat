@@ -28,6 +28,8 @@ EOF
     git_repo             = "terragoat"
     yor_trace            = "cff9836a-83cb-4449-80fb-708d70c3d82f"
   }
+  monitoring = true
+  ebs_optimized = true
 }
 
 resource "aws_ebs_volume" "web_host_storage" {
@@ -46,6 +48,7 @@ resource "aws_ebs_volume" "web_host_storage" {
     git_repo             = "terragoat"
     yor_trace            = "39317050-34d5-449d-a9fc-818eb1774f33"
   }
+  encrypted = true
 }
 
 resource "aws_ebs_snapshot" "example_snapshot" {
@@ -132,7 +135,6 @@ resource "aws_subnet" "web_subnet" {
   vpc_id                  = aws_vpc.web_vpc.id
   cidr_block              = "172.16.10.0/24"
   availability_zone       = var.availability_zone
-  map_public_ip_on_launch = true
 
   tags = {
     Name                 = "${local.resource_prefix.value}-subnet"
@@ -151,7 +153,6 @@ resource "aws_subnet" "web_subnet2" {
   vpc_id                  = aws_vpc.web_vpc.id
   cidr_block              = "172.16.11.0/24"
   availability_zone       = var.availability_zone2
-  map_public_ip_on_launch = true
 
   tags = {
     Name                 = "${local.resource_prefix.value}-subnet2"
@@ -273,6 +274,50 @@ resource "aws_s3_bucket" "flowbucket" {
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "b2b673c8-31f9-46cf-a8f5-2be454893f3b"
+  }
+}
+
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "AES256"
+    }
+  }
+}
+
+
+
+resource "aws_s3_bucket" "flowbucket_log_bucket" {
+  bucket = "flowbucket-log-bucket"
+}
+
+resource "aws_s3_bucket_logging" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.id
+
+  target_bucket = aws_s3_bucket.flowbucket_log_bucket.id
+  target_prefix = "log/"
+}
+
+
+resource "aws_s3_bucket_versioning" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+    }
   }
 }
 

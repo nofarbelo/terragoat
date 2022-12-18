@@ -13,12 +13,11 @@ resource "aws_db_instance" "default" {
   username                = "admin"
   password                = var.password
   apply_immediately       = true
-  multi_az                = false
+  multi_az                = true
   backup_retention_period = 0
-  storage_encrypted       = false
+  storage_encrypted       = true
   skip_final_snapshot     = true
-  monitoring_interval     = 0
-  publicly_accessible     = true
+  monitoring_interval     = true
 
   tags = {
     Name                 = "${local.resource_prefix.value}-rds"
@@ -37,6 +36,8 @@ resource "aws_db_instance" "default" {
   lifecycle {
     ignore_changes = ["password"]
   }
+  auto_minor_version_upgrade = true
+  iam_database_authentication_enabled = true
 }
 
 resource "aws_db_option_group" "default" {
@@ -402,6 +403,8 @@ EOF
     git_repo             = "terragoat"
     yor_trace            = "b3b25ba1-64e2-46d9-a359-49848c7d43ed"
   }
+  monitoring = true
+  ebs_optimized = true
 }
 
 output "db_app_public_dns" {
