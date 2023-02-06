@@ -3,6 +3,7 @@ resource "aws_s3_bucket" "data" {
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
+  
   bucket        = "${local.resource_prefix.value}-data"
   acl           = "public-read"
   force_destroy = true
@@ -24,6 +25,7 @@ resource "aws_s3_bucket" "data" {
 }
 
 resource "aws_s3_bucket_object" "data_object" {
+  
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
   source = "resources/customer-master.xlsx"
@@ -43,6 +45,7 @@ resource "aws_s3_bucket_object" "data_object" {
 
 resource "aws_s3_bucket" "financials" {
   # bucket is not encrypted
+  
   # bucket does not have access logs
   # bucket does not have versioning
   bucket        = "${local.resource_prefix.value}-financials"
@@ -55,6 +58,7 @@ resource "aws_s3_bucket" "financials" {
     git_file             = "terraform/aws/s3.tf"
     git_last_modified_at = "2020-06-16 14:46:24"
     git_last_modified_by = "nimrodkor@gmail.com"
+    
     git_modifiers        = "nimrodkor"
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
@@ -67,6 +71,7 @@ resource "aws_s3_bucket" "operations" {
   # bucket is not encrypted
   # bucket does not have access logs
   bucket = "${local.resource_prefix.value}-operations"
+  
   acl    = "private"
   versioning {
     enabled = true
@@ -89,6 +94,7 @@ resource "aws_s3_bucket" "operations" {
 
 resource "aws_s3_bucket" "data_science" {
   # bucket is not encrypted
+  
   bucket = "${local.resource_prefix.value}-data-science"
   acl    = "private"
   versioning {
@@ -107,6 +113,7 @@ resource "aws_s3_bucket" "data_science" {
     git_modifiers        = "nimrodkor"
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
+    
     yor_trace            = "25565a41-2c9e-45f2-a9e9-6c15b7afcfb6"
   }
 }
@@ -121,6 +128,7 @@ resource "aws_s3_bucket" "logs" {
     rule {
       apply_server_side_encryption_by_default {
         sse_algorithm     = "aws:kms"
+        
         kms_master_key_id = "${aws_kms_key.logs_key.arn}"
       }
     }
@@ -134,6 +142,7 @@ resource "aws_s3_bucket" "logs" {
     git_last_modified_at = "2020-06-16 14:46:24"
     git_last_modified_by = "nimrodkor@gmail.com"
     git_modifiers        = "nimrodkor"
+    
     git_org              = "try-bridgecrew"
     git_repo             = "terragoat"
     yor_trace            = "ce72f84f-4cb6-4f67-b540-54d7e998df19"
