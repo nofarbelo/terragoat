@@ -1,4 +1,6 @@
 resource "aws_s3_bucket" "data" {
+  
+  
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
@@ -18,12 +20,14 @@ resource "aws_s3_bucket" "data" {
     git_repo             = "terragoat"
     yor_trace            = "fc8c2d7a-1997-4fc2-95c1-277cba5c2a38"
   }
+  
   versioning {
     enabled = "${var.versioning_enabled}"
   }
 }
 
 resource "aws_s3_bucket_object" "data_object" {
+  
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
   source = "resources/customer-master.xlsx"
@@ -42,6 +46,7 @@ resource "aws_s3_bucket_object" "data_object" {
 }
 
 resource "aws_s3_bucket" "financials" {
+  
   # bucket is not encrypted
   # bucket does not have access logs
   # bucket does not have versioning
@@ -64,6 +69,7 @@ resource "aws_s3_bucket" "financials" {
 }
 
 resource "aws_s3_bucket" "operations" {
+  
   # bucket is not encrypted
   # bucket does not have access logs
   bucket = "${local.resource_prefix.value}-operations"
@@ -89,6 +95,7 @@ resource "aws_s3_bucket" "operations" {
 
 resource "aws_s3_bucket" "data_science" {
   # bucket is not encrypted
+  
   bucket = "${local.resource_prefix.value}-data-science"
   acl    = "private"
   versioning {
@@ -112,6 +119,7 @@ resource "aws_s3_bucket" "data_science" {
 }
 
 resource "aws_s3_bucket" "logs" {
+  
   bucket = "${local.resource_prefix.value}-logs"
   acl    = "log-delivery-write"
   versioning {
